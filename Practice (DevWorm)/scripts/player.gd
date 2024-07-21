@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var enemy_inattack_range = false
 var enemy_attack_cooldown = true
-var health = 200
+var health = 100
 var player_alive = true
 
 var attack_ip = false
@@ -18,6 +18,7 @@ func _physics_process(delta):
 	enemy_attack()
 	attack()
 	current_camera()
+	update_health()
 	
 	if health <= 0:
 		player_alive = false #would add end screen here
@@ -145,3 +146,21 @@ func current_camera():
 	if global.current_scene == "cliff_side":
 		$world_camera.enabled = false
 		$cliffside_camera.enabled = true
+
+func update_health():
+	var healthbar = $healthbar
+	healthbar.value = health
+	
+	if health >= 100:
+		healthbar.visible = false
+	else:
+		healthbar.visible = true
+		
+
+func _on_regen_timer_timeout():
+	if health < 100:
+		health = health + 20
+		if health > 100:
+			health = 100
+		if health <= 0:
+			health = 0

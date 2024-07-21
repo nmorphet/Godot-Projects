@@ -188,7 +188,7 @@ texture = ExtResource("3_7m7bb")
 10:7/0/y_sort_origin = 5
 10:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 10:7/0/physics_layer_0/angular_velocity = 0.0
-10:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -4.24264, 6.01041, -1.94454, 8, -1.41421, 12.1976, 3.35876, 7.6014, 9.54594, -4.24264, 8, -11.6673, 5.65685, -12.7279, -1.94454)
+10:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10.875, 2, 0.125, -0.25, 11.25, 1, 11.125, 4.5, 9.25, 9.375, -7.5, 9.125, -8, 6.125, -11.625, 6.125)
 10:0/size_in_atlas = Vector2i(2, 1)
 10:0/0 = 0
 10:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -230,10 +230,13 @@ position = Vector2(218, 20)
 position = Vector2(357, 141)
 
 [node name="collisions" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collisions"]
-visible = false
 polygon = PackedVector2Array(4, -1, 179, 0, 179, -28, 260, -27, 260, -2, 416, -1, 417, 192, 0, 192, 0, -6, 3, 0, 1, -17, -10, -13, -20, 213, 440, 216, 433, -45, 7, -26)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="collisions"]
+polygon = PackedVector2Array(259, 0, 261, 30, 291, 30, 292, 46, 416, 46, 417, -1)
 
 [node name="cliffside_transition_point" type="Area2D" parent="."]
 

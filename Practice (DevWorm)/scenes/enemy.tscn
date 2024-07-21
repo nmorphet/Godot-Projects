@@ -81,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fq8bq")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -140,10 +140,11 @@ script = ExtResource("1_3de3r")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_t5anl")
-animation = &"walk_side"
+animation = &"death"
 offset = Vector2(0, -6)
 
 [node name="detection_area" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 2
 
@@ -152,10 +153,12 @@ position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_5r38k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_wqp5a")
 
 [node name="enemy_hitbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
 position = Vector2(0, -3)
@@ -164,8 +167,23 @@ shape = SubResource("CircleShape2D_ef8vf")
 [node name="take_damage_cooldown" type="Timer" parent="."]
 wait_time = 0.555
 
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.335901, 0.76075, 0.13167, 1)
+offset_left = -9.0
+offset_top = -12.0
+offset_right = 161.0
+offset_bottom = 15.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
+
+[node name="death_anim_timer" type="Timer" parent="."]
+wait_time = 0.55
+one_shot = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
 [connection signal="body_entered" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_entered"]
 [connection signal="body_exited" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_exited"]
 [connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="timeout" from="death_anim_timer" to="." method="_on_death_anim_timer_timeout"]

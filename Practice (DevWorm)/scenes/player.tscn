@@ -414,30 +414,45 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_isjfd"]
-radius = 5.0
+radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b8swu"]
 radius = 10.0499
 
 [node name="player" type="CharacterBody2D"]
 y_sort_enabled = true
+position = Vector2(3, 9)
 collision_layer = 3
 script = ExtResource("1_00w5b")
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.231783, 0.752696, 0, 1)
+offset_left = -8.0
+offset_top = 9.0
+offset_right = 112.0
+offset_bottom = 39.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-3, -11)
 sprite_frames = SubResource("SpriteFrames_mjhep")
 animation = &"walk_side"
+frame = 3
+frame_progress = 0.172898
+offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 2)
+visible = false
+position = Vector2(-3, -11)
 shape = SubResource("CircleShape2D_isjfd")
 debug_color = Color(0.892049, 0.000239114, 0.788386, 0.42)
 
 [node name="player_hitbox" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D_hitbox" type="CollisionShape2D" parent="player_hitbox"]
-position = Vector2(-2, -2)
+position = Vector2(-3, -18)
 shape = SubResource("CircleShape2D_b8swu")
 debug_color = Color(0.46015, 0.590102, 0.177814, 0.42)
 
@@ -452,8 +467,6 @@ limit_left = 2
 limit_top = 3
 limit_right = 412
 limit_bottom = 189
-limit_smoothed = true
-position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
@@ -464,11 +477,15 @@ limit_left = -24
 limit_top = -15
 limit_right = 300
 limit_bottom = 187
-limit_smoothed = true
-position_smoothing_enabled = true
 drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="regen_timer" type="Timer" parent="."]
+wait_time = 5.186
+autostart = true
 
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="deal_attack_timer" to="." method="_on_deal_attack_timer_timeout"]
+[connection signal="timeout" from="regen_timer" to="." method="_on_regen_timer_timeout"]
